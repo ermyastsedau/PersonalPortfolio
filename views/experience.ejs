@@ -1,0 +1,215 @@
+<%- include('client_side/layouts/header') %>
+    <!-- Page content-->
+    <section class="py-5">
+        <div class="container px-5">
+            <!-- Contact form-->
+            <div class="bg-light rounded-4 py-5 px-4 px-md-5">
+                <div class="text-center mb-5">
+                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i
+                            class="bi bi-book"></i></div>
+                    <h1 class="fw-bolder">Experiences</h1>
+                    <!-- <p class="lead fw-normal text-muted mb-0">Let's work together!</p> -->
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        <form id="experienceForm" action="/experience" method="post" data-sb-form-api-token="API_TOKEN">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="position" name="position" type="text"
+                                    placeholder="Enter your position..." value="<%= formData.position || '' %>" data-sb-validations="required" />
+                                <label for="position">Position</label>
+                                <% if (errors && errors.position) { %>
+                                    <div class="text-danger" id="positionError">
+                                        <%= errors.position.message %>
+                                    </div>
+                                <% } %>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="employeer" name="employeer" type="text"
+                                    placeholder="Enter your employeer..." value="<%= formData.employeer || '' %>"  data-sb-validations="required" />
+                                <label for="employeer">Employeer</label>
+                                <% if (errors && errors.employeer) { %>
+                                    <div class="text-danger" id="employeerError">
+                                        <%= errors.employeer.message %>
+                                    </div>
+                                <% } %>
+                            </div>                           
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="address" name="address" type="text"
+                                    placeholder="Enter school address..." value="<%= formData.address || '' %>"  data-sb-validations="required" />
+                                <label for="address">Address</label>
+                                <% if (errors && errors.address) { %>
+                                    <div class="text-danger" id="addressError">
+                                        <%= errors.address.message %>
+                                    </div>
+                                <% } %>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <select  class="form-select select2" aria-label="select example" id="from" name="from">
+                                            <option value="" disabled selected>Start Year</option>
+                                            <% years.forEach(option => { %>
+                                              <option value="<%= option.id %>" <% if (formData && formData.from && formData.from === option.id.toString()) { %> selected <% } %>>
+                                                <%= option.name %>
+                                            </option>
+                                            <% }); %>
+                                          </select>
+                                          <% if (errors && errors.from) { %>
+                                            <div class="text-danger" id="fromError">
+                                                <%= errors.from.message %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="form-select select2" aria-label="select example" id="to" name="to">
+                                            <option value="" disabled selected>End Year</option>
+                                            <% years.forEach(option => { %>
+                                              <option value="<%= option.id %>" <% if (formData && formData.to && formData.to === option.id.toString()) { %> selected <% } %>>
+                                                <%= option.name %>
+                                              </option>
+                                            <% }); %>
+                                          </select>
+                                          <% if (errors && errors.to) { %>
+                                            <div class="text-danger"  id="toError">
+                                                <%= errors.to.message %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="description" name="description" type="text"  value="<%= formData.description || '' %>" placeholder="Enter some descrition that you experienced on this field..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <label for="description">Description</label>
+                                <% if (errors && errors.description) { %>
+                                    <div class="text-danger" id="descriptionError">
+                                        <%= errors.description.message %>
+                                    </div>
+                                <% } %>
+                            </div>                          
+                            <!-- Submit success message-->
+                            <!---->
+                            <!-- This is what your users will see when the form-->
+                            <!-- has successfully submitted-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Form submission successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a
+                                        href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                </div>
+                            </div>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage">
+                                <div class="text-center text-danger mb-3">Error sending message!</div>
+                            </div>
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
+                                    type="submit">Submit</button></div>
+                        </form>
+
+                        <br>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <th>No.</th>
+                            <th>Position</th>
+                            <th>Employeer</th>
+                            <th>Address</th>
+                            <th>From-To</th>
+                            <th>Description</th>
+                        </thead>
+                        <tbody>
+                            <% experiences.forEach((row,index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index %>
+                                    </td>
+                                    <td>
+                                        <%= row.position %>
+                                    </td>
+                                    <td>
+                                        <%= row.employeer %>
+                                    </td>
+                                    <td>
+                                        <%= row.address %>
+                                    </td>
+                                    <td>
+                                        <%= row.from %>- <%= row.to %>
+                                    </td>
+                                    <td>
+                                        <%= row.description %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // Get all input fields
+        const inputFields = document.querySelectorAll('input[type="text"], textarea, select');
+    
+        // Add event listeners for focus and input events to all input fields
+        inputFields.forEach(input => {
+            input.addEventListener('focus', () => {
+                // Get the name of the input field that triggered the event
+                const inputName = input.name;
+                // Get the corresponding error message ID
+                const errorId = inputName + 'Error';
+                // Get the error message element
+                const errorMessage = document.getElementById(errorId);
+                // Hide the error message when the input is focused
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+    
+            input.addEventListener('input', () => {
+                // Get the name of the input field that triggered the event
+                const inputName = input.name;
+                // Get the corresponding error message ID
+                const errorId = inputName + 'Error';
+                // Get the error message element
+                const errorMessage = document.getElementById(errorId);
+                // Hide the error message when the user starts typing
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+
+            input.addEventListener('change', () => {
+                // Get the name of the input field that triggered the event
+                const inputName = input.name;
+                // Get the corresponding error message ID
+                const errorId = inputName + 'Error';
+                // Get the error message element
+                const errorMessage = document.getElementById(errorId);
+                // Hide the error message when the user starts typing
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <%- include('client_side/layouts/footer') %>

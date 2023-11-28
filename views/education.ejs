@@ -1,0 +1,170 @@
+<%- include('client_side/layouts/header') %>
+    <!-- Page content-->
+    <section class="py-5">
+        <div class="container px-5">
+            <!-- Contact form-->
+            <div class="bg-light rounded-4 py-5 px-4 px-md-5">
+                <div class="text-center mb-5">
+                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i
+                            class="bi bi-book"></i></div>
+                    <h1 class="fw-bolder">Education</h1>
+                    <!-- <p class="lead fw-normal text-muted mb-0">Let's work together!</p> -->
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        <form id="educationForm" action="/education" method="post" data-sb-form-api-token="API_TOKEN">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="qualification" name="qualification" type="text"
+                                    placeholder="Enter your qualification..." data-sb-validations="required" />
+                                <label for="qualification">Qualification</label>
+                                <div class="invalid-feedback" data-sb-feedback="qualification:required">Qualification is
+                                    required.</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="department" name="department" type="text"
+                                    placeholder="Enter your department..." data-sb-validations="required" />
+                                <label for="department">Department</label>
+                                <div class="invalid-feedback" data-sb-feedback="department:required">Department is
+                                    required.</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="school" name="school" type="text"
+                                    placeholder="Enter your school..." data-sb-validations="required" />
+                                <label for="school">School/University</label>
+                                <div class="invalid-feedback" data-sb-feedback="school:required">School is required.
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="address" name="address" type="text"
+                                    placeholder="Enter school address..." data-sb-validations="required" />
+                                <label for="address">Address</label>
+                                <div class="invalid-feedback" data-sb-feedback="address:required">Address is required.
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <select class="form-select" aria-label="select example" id="from" name="from">
+                                            <% years.forEach(option => { %>
+                                              <option value="<%= option.id %>"><%= option.name %></option>
+                                            <% }); %>
+                                          </select>
+                                        <div class="invalid-feedback" data-sb-feedback="from:required">from is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="form-select" aria-label="select example" id="to" name="to">
+                                            <% years.forEach(option => { %>
+                                              <option value="<%= option.id %>"><%= option.name %></option>
+                                            <% }); %>
+                                          </select>
+                                        <div class="invalid-feedback" data-sb-feedback="to:required">To is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="description" name="description" type="text" placeholder="Enter some descrition that you experienced on this field..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <label for="description">Description</label>
+                            </div>
+                            <!-- Email address input-->
+                            <!-- <div class="form-floating mb-3">
+                            <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                            <label for="email">Email address</label>
+                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                        </div> -->
+                            <!-- Phone number input-->
+                            <!-- <div class="form-floating mb-3">
+                            <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                            <label for="phone">Phone number</label>
+                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                        </div> -->
+                            <!-- Message input-->
+                            <!-- <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                            <label for="message">Message</label>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                        </div> -->
+                            <!-- Submit success message-->
+                            <!---->
+                            <!-- This is what your users will see when the form-->
+                            <!-- has successfully submitted-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Form submission successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a
+                                        href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                </div>
+                            </div>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage">
+                                <div class="text-center text-danger mb-3">Error sending message!</div>
+                            </div>
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
+                                    type="submit">Submit</button></div>
+                        </form>
+
+                        <br>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <th>No.</th>
+                            <th>Qualification</th>
+                            <th>Department</th>
+                            <th>School</th>
+                            <th>From-To</th>
+                            <th>Address</th>
+                        </thead>
+                        <tbody>
+                            <% educations.forEach((row,index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index %>
+                                    </td>
+                                    <td>
+                                        <%= row.qualification %>
+                                    </td>
+                                    <td>
+                                        <%= row.department %>
+                                    </td>
+                                    <td>
+                                        <%= row.school %>
+                                    </td>
+                                    <td>
+                                        <%= row.from %>- <%= row.to %>
+                                    </td>
+                                    <td>
+                                        <%= row.address %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <%- include('client_side/layouts/footer') %>
